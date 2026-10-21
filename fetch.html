@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch Demo</title>
+</head>
+<body>
+    <h1>Compute on Server</h1>
+
+    <label for="x">First number:</label>
+    <input type="number" id="x" value="10">
+
+    <label for="y">Second number:</label>
+    <input type="number" id="y" value="-5">
+
+    <button onclick="compute()">Compute on Server</button>
+
+    <div id="result">Result will appear here.</div>
+
+    <script>
+        function compute() {
+            const x = document.getElementById('x').value;
+            const y = document.getElementById('y').value;
+            const result = document.getElementById('result');
+
+            const url = `http://127.0.0.1:3001/?x=${x}&y=${y}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server request failed');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    result.textContent = data;
+                })
+                .catch(error => {
+                    result.textContent = 'Failed: ' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,25 +1,43 @@
 
-const http = require('http')
+const http = require('http');
 
-const hostname = process.env.hostname || '127.0.0.1'
-const port = process.env.port || 3001
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
 
-const server =
-  http.createServer(
-    (req,res)=> {
-      res.statusCode = 200
-      res.setHeader('Content-Type', 'text/html')
+    res.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>My HTML Table</title>
+        </head>
+        <body>
+            <h1>My Computer Science Table</h1>
+            <table border="1">
+                <tr>
+                    <th>Course</th>
+                    <th>Technology</th>
+                </tr>
+                <tr>
+                    <td>Computer Science</td>
+                    <td>JavaScript</td>
+                </tr>
+                <tr>
+                    <td>Web Development</td>
+                    <td>Node.js</td>
+                </tr>
+                <tr>
+                    <td>Software Engineering</td>
+                    <td>HTML</td>
+                </tr>
+            </table>
+        </body>
+        </html>
+    `);
 
-      res.write('<html> <head> <title> Served </title> </head>')
-      res.write('<body>')
-      res.write('Content \n')
-      res.write('More content \n')
-      res.write('Hello World')
-      res.end('</body></html>')
-      //Close the response
-    }
-)
+    res.end();
+});
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`)
-})
+server.listen(3001, '127.0.0.1', () => {
+    console.log('Server running at http://127.0.0.1:3001/');
+});
